@@ -81,7 +81,7 @@ public class SecurityConfig {
 
     @Bean
     InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-        var one = User.withDefaultPasswordEncoder().username("one").roles("admin", "user").password("test").build();
+        var one = User.withDefaultPasswordEncoder().username("admin").roles("admin", "user").password("test").build();
         var two = User.withDefaultPasswordEncoder().username("two").roles("user").password("test").build();
 
         return new InMemoryUserDetailsManager(one, two);

@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    org.thymeleaf: TRACE
+    org.thymeleaf.spring5: TRACE
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2.client: DEBUG
+    org.springframework.security.oauth2.core: DEBUG
+
+spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+  security:
+    oauth2:
+      client:
+        provider:
+          testSpringAS:
+            user-name-attribute: name
+            issuer-uri: http://localhost:9000
+        registration:
+          testSpringAS:
+            client-id: oidc-client
+            client-secret: secret
+            provider: testSpringAS
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: authorization_code
+            scope: email,openid,profile
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
