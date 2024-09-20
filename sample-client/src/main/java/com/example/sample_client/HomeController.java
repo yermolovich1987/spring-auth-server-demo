@@ -14,6 +14,7 @@ public class HomeController {
         if (oidcUser != null) {
             model.addAttribute("name", oidcUser.getName());
             model.addAttribute("email", oidcUser.getEmail());
+            model.addAttribute("token", oidcUser.getIdToken().getTokenValue());
         }
         return "home";
     }
