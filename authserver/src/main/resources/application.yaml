@@ -7,10 +7,29 @@ logging:
 
 spring:
   security:
-#    user:
-#      name: user
-#      password: password
     oauth2:
+      client:
+        provider:
+          nauth:
+            user-name-attribute: name
+            issuer-uri: http://localhost:9090/auth/realms/test-realm
+          pingidentity:
+            issuer-uri: https://auth.pingone.eu/${PING_ENV_ID}/as
+        registration:
+          nauth:
+            client-id: test-client
+            client-secret: c582f8c2-2f92-4066-8128-e23276ad64b7
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: authorization_code
+            scope: openid
+          pingidentity:
+            client-id: ${PING_CLIENT_ID}
+            client-secret: ${PING_CLIENT_SECRET}
+            provider: pingidentity
+            client-authentication-method: client_secret_post
+            authorization-grant-type: authorization_code
+            scope: email,openid
+            redirect-uri: http://localhost:8080/login/oauth2/code/pingidentity
       authorizationserver:
         client:
           oidc-client:
@@ -24,10 +43,10 @@ spring:
                 - "refresh_token"
               redirect-uris:
                 - "http://127.0.0.1:8080/login/oauth2/code/testSpringAS"
-#                - "http://localhost:8080/login/oauth2/code/testSpringAS"
+              #                - "http://localhost:8080/login/oauth2/code/testSpringAS"
               post-logout-redirect-uris:
                 - "http://127.0.0.1:8080/"
-#                - "http://localhost:8080/"
+              #                - "http://localhost:8080/"
               scopes:
                 - "openid"
                 - "profile"

@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
@@ -70,17 +71,27 @@ public class SecurityConfig {
             throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/assets/**", "/login**", "/error**").permitAll()
                         .anyRequest().authenticated()
                 )
                 // Form login handles the redirect to the login page from the
                 // authorization server filter chain
-                .formLogin(Customizer.withDefaults());
+//                .formLogin(Customizer.withDefaults())
+                .oauth2Login(Customizer.withDefaults());
+//                .formLogin(formLogin ->
+//                        formLogin
+//                                .loginPage("/login")
+//                )
+//                .oauth2Login(oauth2Login ->
+//                        oauth2Login
+//                                .loginPage("/login")
+//                );
 
         return http.build();
     }
 
     @Bean
-    InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+    UserDetailsService inMemoryUserDetailsManager() {
         var one = User.withDefaultPasswordEncoder().username("admin").roles("admin", "user").password("test").build();
         var two = User.withDefaultPasswordEncoder().username("two").roles("user").password("test").build();
 
