@@ -19,7 +19,6 @@ spring:
       client:
         provider:
           testSpringAS:
-            user-name-attribute: name
             issuer-uri: http://localhost:9000
         registration:
           testSpringAS:

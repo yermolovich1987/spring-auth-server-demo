@@ -7,9 +7,9 @@ logging:
 
 spring:
   security:
-    user:
-      name: user
-      password: password
+#    user:
+#      name: user
+#      password: password
     oauth2:
       authorizationserver:
         client:
@@ -32,4 +32,4 @@ spring:
                 - "openid"
                 - "profile"
                 - "email"
-            require-authorization-consent: false
+            require-authorization-consent: true
